@@ -87,28 +87,28 @@ User git
 IdentityFile ~/.ssh/report_id_rsa
 EOF
     ) &&
-    ln -sf /usr/local/bin/post-commit /workspace/.git/hooks/post-commit &&
-    git -C /workspace config user.name "${USER_NAME}" &&
-    git -C /workspace config user.email "${USER_EMAIL}" &&
-    git -C /workspace remote add upstream upstream:${UPSTREAM_ORGANIZATION}/${UPSTREAM_REPOSITORY}.git &&
-    git -C /workspace remote set-url --push upstream no_push &&
-    git -C /workspace remote add origin origin:${ORIGIN_ORGANIZATION}/${ORIGIN_REPOSITORY}.git &&
-    git -C /workspace remote add report report:${REPORT_ORGANIZATION}/${REPORT_REPOSITORY}.git &&
+    ln -sf /usr/local/bin/post-commit /opt/docker/workspace/.git/hooks/post-commit &&
+    git -C /opt/docker/workspace config user.name "${USER_NAME}" &&
+    git -C /opt/docker/workspace config user.email "${USER_EMAIL}" &&
+    git -C /opt/docker/workspace remote add upstream upstream:${UPSTREAM_ORGANIZATION}/${UPSTREAM_REPOSITORY}.git &&
+    git -C /opt/docker/workspace remote set-url --push upstream no_push &&
+    git -C /opt/docker/workspace remote add origin origin:${ORIGIN_ORGANIZATION}/${ORIGIN_REPOSITORY}.git &&
+    git -C /opt/docker/workspace remote add report report:${REPORT_ORGANIZATION}/${REPORT_REPOSITORY}.git &&
     (
         (
-            git -C /workspace fetch upstream ${MASTER_BRANCH} &&
-                git -C /workspace checkout upstream/${MASTER_BRANCH}
+            git -C /opt/docker/workspace fetch upstream ${MASTER_BRANCH} &&
+                git -C /opt/docker/workspace checkout upstream/${MASTER_BRANCH}
         ) ||
         (
-            touch /workspace/README.md &&
-                git -C /workspace add README.md &&
-                git -C /workspace checkout -b ${MASTER_BRANCH} &&
-                git -C /workspace commit -am "init" &&
-                git -C /workspace push report ${MASTER_BRANCH}
+            touch /opt/docker/workspace/README.md &&
+                git -C /opt/docker/workspace add README.md &&
+                git -C /opt/docker/workspace checkout -b ${MASTER_BRANCH} &&
+                git -C /opt/docker/workspace commit -am "init" &&
+                git -C /opt/docker/workspace push report ${MASTER_BRANCH}
                 true
         )
     ) &&
-    git -C /workspace checkout -b scratch/$(uuidgen) &&
+    git -C /opt/docker/workspace checkout -b scratch/$(uuidgen) &&
     cat > /opt/docker/entrypoint.env <<EOF
 CLOUD9_PORT=16576
 PROJECT_NAME=git:${ORIGIN_REPOSITORY}
