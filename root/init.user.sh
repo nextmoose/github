@@ -114,6 +114,6 @@ EOF
     ) &&
     git -C /opt/docker/workspace checkout -b scratch/$(uuidgen) &&
     cat >> /home/user/.bashrc <<EOF
-MASTER_BRANCH=${MASTER_BRANCH}    
+export MASTER_BRANCH=${MASTER_BRANCH}    
 EOF
 
