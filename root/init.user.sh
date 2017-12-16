@@ -55,6 +55,10 @@ do
             REPORT_REPOSITORY="${2}" &&
                 shift 2
         ;;
+        --master-branch)
+            MASTER_BRANCH="${2}" &&
+                shift 2
+        ;;
         *)
             echo Unknown Option &&
             echo ${0} &&
@@ -109,7 +113,7 @@ EOF
         )
     ) &&
     git -C /opt/docker/workspace checkout -b scratch/$(uuidgen) &&
-    cat > /opt/docker/entrypoint.env <<EOF
-CLOUD9_PORT=16576
-PROJECT_NAME=git:${ORIGIN_REPOSITORY}
+    cat >> /home/user/.bashrc <<EOF
+MASTER_BRANCH=${MASTER_BRANCH}    
 EOF
+
