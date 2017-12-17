@@ -20,7 +20,7 @@ done &&
     if [ -z "${MESSAGE}" ] && [ -z "${MESSAGE_FILE}" ]
     then
         git commit --allow-empty
-    elif [ -z "${MESSAGE}" ]
+    elif [ ! -z "${MESSAGE_FILE}" ]
     then
         tee ${MESSAGE_FILE} &&
             git commit --allow-empty --file ${MESSAGE_FILE} &&
