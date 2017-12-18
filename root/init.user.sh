@@ -105,11 +105,13 @@ EOF
         ) ||
         (
             touch /opt/docker/workspace/README.md &&
-                git -C /opt/docker/workspace add README.md &&
+                touch /opt/docker/workspace/.gitignore &&
+                git -C /opt/docker/workspace add README.md .gitignore &&
                 git -C /opt/docker/workspace checkout -b ${MASTER_BRANCH} &&
+                mv /opt/docker/workspace/.git/hooks/post-commit /opt/docker/workspace/.git/post-commit.backup &&
                 git -C /opt/docker/workspace commit -am "init" &&
+                mv /opt/docker/workspace/.git/hooks/post-commit.backup /opt/docker/workspace/.git/post-commit &&
                 git -C /opt/docker/workspace push report ${MASTER_BRANCH}
-                true
         )
     ) &&
     git -C /opt/docker/workspace checkout -b scratch/$(uuidgen) &&
