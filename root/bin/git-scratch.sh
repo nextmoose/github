@@ -25,6 +25,9 @@ done &&
         tee ${MESSAGE_FILE} &&
             git commit --allow-empty --file ${MESSAGE_FILE} &&
             rm -f ${MESSAGE_FILE}
-    else
+    elif [ ! -z "${MESSAGE}" ]
+    then
         git commit --allow-empty --message "${MESSAGE}"
+    else
+        git commit --allow-empty --allow-empty-message
     fi
