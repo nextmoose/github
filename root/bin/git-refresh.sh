@@ -10,8 +10,5 @@ git standing &&
     then
         git commit --allow-empty --message "Sucessfully rebased upstream/${MASTER_BRANCH}: THIS_COMMIT=${THIS_COMMIT}, MASTER_COMMIT=${MASTER_COMMIT}, BASE_COMMIT=${BASE_COMMIT}"
     else
-        git rebase --abort &&
-            git commit -am --allow-empty --message "Failed to rebase upstream/${MASTER_BRANCH}: THIS_COMMIT=${THIS_COMMIT}, MASTER_COMMIT=${MASTER_COMMIT}, BASE_COMMIT=${BASE_COMMIT}" &&
-            echo Failed to rebase &&
-            exit 64
+        cat .git/rebase-merge/message
     fi
